@@ -1,0 +1,41 @@
+{
+  "author": {
+    "name": "Jeong Juwon",
+    "email": "2jw0718@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/jeongjuwon/react-native-iamport/issues"
+  },
+  "dependencies": {},
+  "description": "Simple React Native Iamport Module",
+  "devDependencies": {},
+  "homepage": "https://github.com/jeongjuwon/react-native-iamport#readme",
+  "keywords": [
+    "react",
+    "react-native",
+    "react-component",
+    "iamport"
+  ],
+  "license": "MIT",
+  "main": "index",
+  "maintainers": [
+    {
+      "name": "jeongjuwon",
+      "email": "2jw0718@gmail.com"
+    }
+  ],
+  "name": "react-native-iamport",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react-native": ">=0.40"
+  },
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeongjuwon/react-native-iamport.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.1.0"
+}
