@@ -1,11 +1,12 @@
 # react-native-iamport
 
-리액트 네이티브용 아임포트 모듈입니다.
+리액트 네이티브용 아임포트 모듈입니다. 필요에 의해 나이스페이와 카카오페이, 페이코만 구현하였습니다.
+
 
 # 설치
 
 ```
-npm install --save
+npm install --save https://github.com/jeongjuwon/react-native-iamport.git
 ```
 
 ```javascript
