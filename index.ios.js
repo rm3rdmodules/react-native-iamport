@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 
-import {WebView} from 'react-native';
+import {
+  WebView,
+  Linking
+} from 'react-native';
 
 export default class IAmPort extends Component {
 
@@ -30,7 +33,7 @@ export default class IAmPort extends Component {
             pg : '` + params.pg + `',
             pay_method : '` + params.pay_method + `',
             merchant_uid : '` + 'merchant_' + new Date().getTime() + `',
-            m_redirect_url : '` + params.app_scheme + `://success',
+            ` + (params.pg == 'nice' ? "m_redirect_url : '" + params.app_scheme + "://success'," : "") + `
             app_scheme : '` + params.app_scheme + `',
             name : '` + params.name + `',
             amount : ` + params.amount + `,
@@ -39,7 +42,15 @@ export default class IAmPort extends Component {
             buyer_tel : '` + params.buyer_tel + `',
             buyer_addr : '` + params.buyer_addr + `',
             buyer_postcode : '` + params.buyer_postcode + `'
-          });
+          }, function(rsp){
+
+           if('` + params.pg + `' == 'nice'){
+
+             return;
+           }
+
+           window.postMessage(JSON.stringify(rsp));
+         });
         </script>
       </body>
     </html>
@@ -62,12 +73,26 @@ export default class IAmPort extends Component {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   }
 
+  _onMessage(e) {
+
+    var res = JSON.parse(e.nativeEvent.data);
+    var result = res.success ? "success" : "cancel";
+    var request_id = res.request_id;
+    var imp_uid = res.imp_uid;
+    var merchant_uid = res.merchant_uid;
+    var error_msg = res.error_msg;
+
+    // console.log(result);
+
+    this.props.onPaymentResultReceive({result, imp_uid, merchant_uid});
+  }
+
   _onShouldStartLoadWithRequest(e) {
 
     var url = e.url;
     var me = this;
 
-    console.log("onShouldStartLoadWithRequest", url);
+    console.log("onShouldStartLoadWithRequest", e);
 
     var imp_uid = this.getParameterByName("imp_uid", url),
       merchant_uid = this.getParameterByName("merchant_uid", url),
@@ -77,18 +102,6 @@ export default class IAmPort extends Component {
 
       result = "success";
     } else if (url.indexOf(this.props.params.app_scheme + '://cancel') == 0) {
-
-      result = "cancel";
-    } else if (url.indexOf('https://service.iamport.kr/kakao_payments/success') == 0) {
-
-      result = "success";
-    } else if (url.indexOf('https://service.iamport.kr/kakao_payments/cancel') == 0) {
-
-      result = "cancel";
-    } else if (url.indexOf('https://service.iamport.kr/payco_payments/success') == 0) {
-
-      result = "success";
-    } else if (url.indexOf('https://service.iamport.kr/payco_payments/cancel') == 0) {
 
       result = "cancel";
     }
@@ -124,7 +137,7 @@ export default class IAmPort extends Component {
     return (
       <WebView {...this.props} source={{
         html: this.getRequestContent()
-      }} startInLoadingState={true} injectedJavaScript={this.injectPostMessageFetch()} onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest.bind(this)} style={this.props.style}></WebView>
+      }} startInLoadingState={true} injectedJavaScript={this.injectPostMessageFetch()} onMessage={this._onMessage.bind(this)} onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest.bind(this)} style={this.props.style}></WebView>
     );
   }
 }
