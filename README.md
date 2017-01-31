@@ -50,3 +50,41 @@ export default class Payment extends Component {
   }
 }
 ```
+
+# Info.plist 파일에 내용 추가
+```
+<key>LSApplicationQueriesSchemes</key>
+<array>
+	<string>kakao0123456789abcdefghijklmn</string>
+	<string>kakaokompassauth</string>
+	<string>storykompassauth</string>
+	<string>kakaolink</string>
+	<string>kakaotalk</string>
+	<string>kakaostory</string>
+	<string>storylink</string>
+	<string>payco</string>
+	<string>kftc-bankpay</string>
+	<string>ispmobile</string>
+	<string>itms-apps</string>
+	<string>hdcardappcardansimclick</string>
+	<string>smhyundaiansimclick</string>
+	<string>shinhan-sr-ansimclick</string>
+	<string>smshinhanansimclick</string>
+	<string>kb-acp</string>
+	<string>mpocket.online.ansimclick</string>
+	<string>ansimclickscard</string>
+	<string>ansimclickipcollect</string>
+	<string>vguardstart</string>
+	<string>samsungpay</string>
+	<string>scardcertiapp</string>
+	<string>lottesmartpay</string>
+	<string>lotteappcard</string>
+	<string>cloudpay</string>
+	<string>nhappvardansimclick</string>
+	<string>nonghyupcardansimclick</string>
+	<string>citispay</string>
+	<string>citicardappkr</string>
+	<string>citimobileapp</string>
+	<string>itmss</string>
+</array>
+```
