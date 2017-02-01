@@ -9,6 +9,89 @@ npm install --save react-native-iamport
 react-native link react-native-iamport
 ```
 
+# IOS 설정
+### Info.plist 파일에 NSAppTransportSecurity 내용 추가
+
+```
+<key>NSAppTransportSecurity</key>
+<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
+<dict>
+	<key>NSExceptionDomains</key>
+	<dict>
+		<key>localhost</key>
+		<dict>
+			<key>NSExceptionAllowsInsecureHTTPLoads</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>NSAllowsArbitraryLoads</key> <-- 추가
+	<true/> <-- 추가
+	<key>NSAllowsArbitraryLoadsInWebContent</key> <-- 추가
+	<true/> <-- 추가
+</dict>
+```
+
+### Info.plist 파일에 LSApplicationQueriesSchemes 내용 추가
+```
+<key>LSApplicationQueriesSchemes</key>
+<array>
+	<string>kakao0123456789abcdefghijklmn</string>
+	<string>kakaokompassauth</string>
+	<string>storykompassauth</string>
+	<string>kakaolink</string>
+	<string>kakaotalk</string>
+	<string>kakaostory</string>
+	<string>storylink</string>
+	<string>payco</string>
+	<string>kftc-bankpay</string>
+	<string>ispmobile</string>
+	<string>itms-apps</string>
+	<string>hdcardappcardansimclick</string>
+	<string>smhyundaiansimclick</string>
+	<string>shinhan-sr-ansimclick</string>
+	<string>smshinhanansimclick</string>
+	<string>kb-acp</string>
+	<string>mpocket.online.ansimclick</string>
+	<string>ansimclickscard</string>
+	<string>ansimclickipcollect</string>
+	<string>vguardstart</string>
+	<string>samsungpay</string>
+	<string>scardcertiapp</string>
+	<string>lottesmartpay</string>
+	<string>lotteappcard</string>
+	<string>cloudpay</string>
+	<string>nhappvardansimclick</string>
+	<string>nonghyupcardansimclick</string>
+	<string>citispay</string>
+	<string>citicardappkr</string>
+	<string>citimobileapp</string>
+	<string>itmss</string>
+</array>
+```
+
+# 안드로이드 설정
+
+### AndroidManifest.xml 추가
+
+```
+<activity
+  android:name=".MainActivity"
+  android:label="@string/app_name"
+  android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+  android:launchMode="singleTask"> <-- singletask launchMode 추가
+  <intent-filter>
+	  <action android:name="android.intent.action.MAIN" />
+	  <category android:name="android.intent.category.LAUNCHER" />
+  </intent-filter>
+  <intent-filter>  <-- 인텐트 필터 추가
+	  <action android:name="android.intent.action.VIEW" />
+	  <category android:name="android.intent.category.DEFAULT" />
+	  <category android:name="android.intent.category.BROWSABLE" />
+	  <data android:scheme="yourappscheme" />
+  </intent-filter>
+</activity>
+```
+
 # Example
 
 ```javascript
@@ -50,42 +133,4 @@ export default class Payment extends Component {
     )
   }
 }
-```
-
-# Info.plist 파일에 내용 추가
-```
-<key>LSApplicationQueriesSchemes</key>
-<array>
-	<string>kakao0123456789abcdefghijklmn</string>
-	<string>kakaokompassauth</string>
-	<string>storykompassauth</string>
-	<string>kakaolink</string>
-	<string>kakaotalk</string>
-	<string>kakaostory</string>
-	<string>storylink</string>
-	<string>payco</string>
-	<string>kftc-bankpay</string>
-	<string>ispmobile</string>
-	<string>itms-apps</string>
-	<string>hdcardappcardansimclick</string>
-	<string>smhyundaiansimclick</string>
-	<string>shinhan-sr-ansimclick</string>
-	<string>smshinhanansimclick</string>
-	<string>kb-acp</string>
-	<string>mpocket.online.ansimclick</string>
-	<string>ansimclickscard</string>
-	<string>ansimclickipcollect</string>
-	<string>vguardstart</string>
-	<string>samsungpay</string>
-	<string>scardcertiapp</string>
-	<string>lottesmartpay</string>
-	<string>lotteappcard</string>
-	<string>cloudpay</string>
-	<string>nhappvardansimclick</string>
-	<string>nonghyupcardansimclick</string>
-	<string>citispay</string>
-	<string>citicardappkr</string>
-	<string>citimobileapp</string>
-	<string>itmss</string>
-</array>
 ```
