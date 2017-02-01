@@ -1,15 +1,8 @@
 'use strict';
-/**
- * This exposes the native ToastAndroid module as a JS module. This has a
- * function 'show' which takes the following parameters:
- *
- * 1. String message: A string with the text to toast
- * 2. int duration: The duration of the toast. May be ToastAndroid.SHORT or
- *    ToastAndroid.LONG
- */
+
 import React, {Component} from 'react';
 
-import {requireNativeComponent, NativeModules, DeviceEventEmitter} from 'react-native';
+import {requireNativeComponent, DeviceEventEmitter} from 'react-native';
 
 const IAmPortViewManager = requireNativeComponent('IAmPortViewManager', null);
 
@@ -71,7 +64,7 @@ class IAmPort extends Component {
     return HTML;
   }
 
-  _onPaymentResultReceive = (e) => {
+  _onPaymentResultReceive(e) {
 
     if (this.props.onPaymentResultReceive) {
 

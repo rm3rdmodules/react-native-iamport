@@ -1,4 +1,4 @@
-package com.datagraph.iamport;
+package com.jeongjuwon.iamport;
 
 import android.widget.Toast;
 import android.content.Intent;
@@ -22,7 +22,7 @@ public class IAmPortModule extends ReactContextBaseJavaModule implements Activit
   public IAmPortModule(ReactApplicationContext reactContext) {
 
     super(reactContext);
-    
+
     reactContext.addActivityEventListener(this);
   }
 

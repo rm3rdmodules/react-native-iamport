@@ -1,4 +1,4 @@
-package com.datagraph.iamport;
+package com.jeongjuwon.iamport;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
