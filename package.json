@@ -7,20 +7,21 @@
     "url": "https://github.com/jeongjuwon/react-native-iamport/issues"
   },
   "dependencies": {},
-  "description": "Simple React Native Iamport Module",
+  "description": "Simple react native i'mport module",
   "devDependencies": {},
-  "homepage": "https://github.com/jeongjuwon/react-native-iamport#readme",
+  "homepage": "https://github.com/jeongjuwon/react-native-iamport",
   "keywords": [
     "react",
     "react-native",
     "react-component",
-    "iamport"
+    "iamport",
+    "import"
   ],
   "license": "MIT",
   "main": "index",
   "maintainers": [
     {
-      "name": "jeongjuwon",
+      "name": "Jeong Juwon",
       "email": "2jw0718@gmail.com"
     }
   ],
