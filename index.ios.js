@@ -135,9 +135,14 @@ export default class IAmPort extends Component {
 
   render() {
     return (
-      <WebView {...this.props} source={{
-        html: this.getRequestContent()
-      }} startInLoadingState={true} injectedJavaScript={this.injectPostMessageFetch()} onMessage={this._onMessage.bind(this)} onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest.bind(this)} style={this.props.style}></WebView>
+      <WebView
+        {...this.props}
+        source={{ html: this.getRequestContent() }}
+        startInLoadingState={true} injectedJavaScript={this.injectPostMessageFetch()} onMessage={this._onMessage.bind(this)} onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest.bind(this)}
+        renderError={(e) => {
+          return null;
+        }}
+        style={this.props.style} />
     );
   }
 }
