@@ -23,8 +23,8 @@ export default class IAmPort extends Component {
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
       </head>
       <body>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" ></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
         <script type="text/javascript">
           var IMP = window.IMP;
           IMP.init('` + params.code + `');
