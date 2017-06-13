@@ -21,6 +21,7 @@ class IAmPort extends Component {
   getRequestContent() {
 
     let params = this.props.params;
+    const merchant_uid = params.merchant_uid || ('merchant_' + new Date().getTime());
     let HTML = `
     <!DOCTYPE html>
     <html>
@@ -38,7 +39,7 @@ class IAmPort extends Component {
           IMP.request_pay({
             pg : '` + params.pg + `',
             pay_method : '` + params.pay_method + `',
-            merchant_uid : '` + 'merchant_' + new Date().getTime() + `',
+            merchant_uid : '` + merchant_uid + `',
             ` + (params.pg == 'nice' ? "m_redirect_url : '" + params.app_scheme + "://success'," : "") + `
             app_scheme : '` + params.app_scheme + `',
             name : '` + params.name + `',
