@@ -24,7 +24,7 @@ export default class IAmPort extends Component {
       </head>
       <body>
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" ></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.4.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
         <script type="text/javascript">
           var IMP = window.IMP;
           IMP.init('` + params.code + `');
@@ -33,7 +33,7 @@ export default class IAmPort extends Component {
             pg : '` + params.pg + `',
             pay_method : '` + params.pay_method + `',
             merchant_uid : '` + 'merchant_' + new Date().getTime() + `',
-            ` + (params.pg == 'nice' ? "m_redirect_url : '" + params.app_scheme + "://success'," : "") + `
+            m_redirect_url : '` + params.app_scheme + `://success',
             app_scheme : '` + params.app_scheme + `',
             name : '` + params.name + `',
             amount : ` + params.amount + `,
@@ -135,9 +135,14 @@ export default class IAmPort extends Component {
 
   render() {
     return (
-      <WebView {...this.props} source={{
-        html: this.getRequestContent()
-      }} startInLoadingState={true} injectedJavaScript={this.injectPostMessageFetch()} onMessage={this._onMessage.bind(this)} onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest.bind(this)} style={this.props.style}></WebView>
+      <WebView
+        {...this.props}
+        source={{ html: this.getRequestContent() }}
+        startInLoadingState={true} injectedJavaScript={this.injectPostMessageFetch()} onMessage={this._onMessage.bind(this)} onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest.bind(this)}
+        renderError={(e) => {
+          return null;
+        }}
+        style={this.props.style} />
     );
   }
 }

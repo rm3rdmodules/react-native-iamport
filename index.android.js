@@ -30,7 +30,7 @@ class IAmPort extends Component {
       </head>
       <body>
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" ></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.4.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
         <script type="text/javascript">
           var IMP = window.IMP;
           IMP.init('` + params.code + `');
