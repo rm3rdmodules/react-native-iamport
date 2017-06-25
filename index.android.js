@@ -34,25 +34,25 @@ class IAmPort extends Component {
         <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
         <script type="text/javascript">
           var IMP = window.IMP;
-          IMP.init('` + params.code + `');
+          IMP.init('${params.code}');
 
           IMP.request_pay({
-            pg : '` + params.pg + `',
-            pay_method : '` + params.pay_method + `',
-            merchant_uid : '` + merchant_uid + `',
-            ` + (params.pg == 'nice' ? "m_redirect_url : '" + params.app_scheme + "://success'," : "") + `
-            app_scheme : '` + params.app_scheme + `',
-            name : '` + params.name + `',
-            amount : ` + params.amount + `,
-            buyer_email : '` + params.buyer_email + `',
-            buyer_name : '` + params.buyer_name + `',
-            buyer_tel : '` + params.buyer_tel + `',
-            buyer_addr : '` + params.buyer_addr + `',
-            buyer_postcode : '` + params.buyer_postcode + `'
+            pg : '${params.pg}',
+            pay_method : '${params.pay_method}',
+            merchant_uid : '${merchant_uid}',
+            ${(params.pg == 'nice' ? "m_redirect_url : '" + params.app_scheme + "://success'," : "")}
+            app_scheme : '${params.app_scheme}',
+            name : '${params.name}',
+            amount : ${params.amount},
+            buyer_email : '${params.buyer_email}',
+            buyer_name : '${params.buyer_name}',
+            buyer_tel : '${params.buyer_tel}',
+            buyer_addr : '${params.buyer_addr}',
+            buyer_postcode : '${params.buyer_postcode}',
+            vbank_due : '${params.vbank_due}'
           }, function(rsp){
 
-            if('` + params.pg + `' == 'nice'){
-
+            if('${params.pg}' == 'nice'){
               return;
             }
 
