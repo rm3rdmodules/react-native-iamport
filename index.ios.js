@@ -100,16 +100,15 @@ export default class IAmPort extends Component {
       merchant_uid = this.getParameterByName("merchant_uid", url),
       result = "";
 
-    if (url.indexOf(this.props.params.app_scheme + '://success') == 0) {
-
+    if (url.includes('imp_success=false')) { // 취소 버튼을 눌렀거나 결제 실패시
+      result = "failed"
+    } else if (url.indexOf(this.props.params.app_scheme + '://success') == 0) {
       result = "success";
     } else if (url.indexOf(this.props.params.app_scheme + '://cancel') == 0) {
-
-      result = "cancel";
+      result = "canceled";
     }
 
     if (result) {
-
       this.props.onPaymentResultReceive({result, imp_uid, merchant_uid});
     }
 
