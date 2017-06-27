@@ -10,6 +10,12 @@ react-native link react-native-iamport
 ```
 
 # IOS 설정
+
+### XCode 프로젝트의 Target에서 info 에 scheme 정보 추가
+
+![iOS Scheme](etc/scheme_ios.png)
+
+
 ### Info.plist 파일에 NSAppTransportSecurity 내용 추가
 
 ```
