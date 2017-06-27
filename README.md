@@ -13,6 +13,8 @@ react-native link react-native-iamport
 
 ### XCode 프로젝트의 Target에서 info 에 scheme 정보 추가
 
+app_scheme는 IAmPort 모듈에 정의할 것을 입력한다. (아래 Example 참조)
+
 ![iOS Scheme](etc/scheme_ios.png)
 
 
