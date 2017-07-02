@@ -11,6 +11,7 @@ import android.webkit.CookieManager;
 import android.util.Log;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.ReadableMap;
@@ -25,6 +26,7 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.common.annotations.VisibleForTesting;
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
 import com.siot.iamportsdk.KakaoWebViewClient;
 import com.siot.iamportsdk.NiceWebViewClient;
@@ -66,7 +68,6 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
         CookieManager.getInstance().setAcceptCookie(true); // add default cookie support
         CookieManager.getInstance().setAcceptFileSchemeCookies(true); // add default cookie support
 
-
         return webView;
     }
 
@@ -80,9 +81,19 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
         return this.aPackage;
     }
 
+    public void emitPaymentEvent(String result, String imp_uid, String merchant_uid){
+
+        WritableMap params = Arguments.createMap();
+        params.putString("result", result);
+        params.putString("imp_uid", imp_uid);
+        params.putString("merchant_uid", merchant_uid);
+
+        reactContext.getJSModule(RCTDeviceEventEmitter.class).emit("paymentEvent", params);
+    }
+
     @ReactProp(name = "html")
     public void setHtml(IAmPortWebView view, @Nullable String html) {
-
+        Log.i("iamport", "setHtml: " + html);
         view.loadDataWithBaseURL(view.getBaseUrl(), html, HTML_MIME_TYPE, view.getCharset(), null);
     }
 
@@ -101,15 +112,24 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
     @ReactProp(name = "pg")
     public void setPG(IAmPortWebView view, @Nullable String pg) {
 
-        Log.e("iamport", "PG - " + pg);
+        Log.i("iamport", "PG - " + pg);
 
         if(pg.equals("nice")){
 
-            view.setWebViewClient(new KakaoWebViewClient(activity, view));
+          NiceWebViewClient webViewClient = new NiceWebViewClient(activity, view, new UrlLoadingCallBack() {
+
+            @Override
+            public void shouldOverrideUrlLoadingCallBack(String s) {
+              Log.i("iamport", "shouldOverrideUrlLoadingCallBack - " + s);
+              emitPaymentEvent(s, s, s);
+            }
+
+          });
+          view.setWebViewClient(webViewClient);
         }
         else if(pg.equals("kakao")){
 
-            view.setWebViewClient(new NiceWebViewClient(activity, view));
+            view.setWebViewClient(new KakaoWebViewClient(activity, view));
         }
         else if(pg.equals("payco")){
 

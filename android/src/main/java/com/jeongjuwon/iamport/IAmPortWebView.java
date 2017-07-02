@@ -113,8 +113,6 @@ class IAmPortWebView extends WebView implements LifecycleEventListener {
 
         Intent intent = activity.getIntent();
 
-        Log.i("iamport", "onHostResume - IAmPortWebView");
-
         if ( intent != null ) {
 
             Uri intentData = intent.getData();
@@ -124,7 +122,7 @@ class IAmPortWebView extends WebView implements LifecycleEventListener {
                 //카카오페이 인증 후 복귀했을 때 결제 후속조치
                 String url = intentData.toString();
 
-                Log.i("iamport", "receive URL - " + url);
+                Log.i("iamport", "onHostResume URL - " + url);
 
                 if ( url.startsWith(this.getAppScheme() + "://process") ) {
 
@@ -146,6 +144,9 @@ class IAmPortWebView extends WebView implements LifecycleEventListener {
 
                     this.emitPaymentEvent("success", imp_uid, merchant_uid);
                 }
+
+                //TODO
+                this.emitPaymentEvent("onHostResume", url, url);
 
                 intent.replaceExtras(new Bundle());
                 intent.setAction("");
