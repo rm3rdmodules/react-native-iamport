@@ -10,12 +10,55 @@ class IAmPort extends Component {
 
   componentDidMount() {
 
-    DeviceEventEmitter.addListener('paymentEvent', this._onPaymentResultReceive);
+    DeviceEventEmitter.addListener('paymentEvent', this._onShouldStartLoadWithRequest.bind(this));
   }
 
   componentWillUnmount() {
 
     DeviceEventEmitter.removeAllListeners('paymentEvent');
+  }
+
+  getParameterByName(name, url) {
+
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results)
+      return null;
+    if (!results[2])
+      return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  _onShouldStartLoadWithRequest(e) {
+
+    var url = e.result;
+    var me = this;
+    var original = e;
+
+    //TODO delete
+    // console.log("onShouldStartLoadWithRequest", e);
+
+    var imp_uid = this.getParameterByName("imp_uid", url),
+      merchant_uid = this.getParameterByName("merchant_uid", url),
+      result = "";
+
+    if (url.includes('success=false')) { // 취소 버튼을 눌렀거나 결제 실패시
+      result = "failed"
+    } else if (url.includes('success=true')) {
+      result = "success";
+    } else if (url.includes('payments/vbank')) {
+      result = "vbank";
+    }
+
+    if (result) {
+      this.props.onPaymentResultReceive({result, imp_uid, merchant_uid, original});
+    }
+
+    return true;
   }
 
   getRequestContent() {
@@ -40,7 +83,6 @@ class IAmPort extends Component {
             pg : '${params.pg}',
             pay_method : '${params.pay_method}',
             merchant_uid : '${merchant_uid}',
-            ${(params.pg == 'nice' ? "m_redirect_url : '" + params.app_scheme + "://success'," : "")}
             app_scheme : '${params.app_scheme}',
             name : '${params.name}',
             amount : ${params.amount},
@@ -66,6 +108,8 @@ class IAmPort extends Component {
   }
 
   _onPaymentResultReceive(e) {
+    // TODO: delete
+    // console.log(e);
 
     if (this.props.onPaymentResultReceive) {
 

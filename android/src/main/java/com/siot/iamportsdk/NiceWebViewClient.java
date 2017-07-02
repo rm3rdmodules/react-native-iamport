@@ -20,21 +20,24 @@ import android.webkit.WebViewClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.util.Log;
+import com.jeongjuwon.iamport.UrlLoadingCallBack;
 
 public class NiceWebViewClient extends WebViewClient {
 
 	private Activity activity;
 	private WebView target;
 	private String BANK_TID = "";
+	UrlLoadingCallBack mCallBack;
 
 	final int RESCODE = 1;
 	final String NICE_URL = "https://web.nicepay.co.kr/smart/interfaceURL.jsp";			// NICEPAY SMART 요청 URL
 	final String NICE_BANK_URL = "https://web.nicepay.co.kr/smart/bank/payTrans.jsp";	// 계좌이체 거래 요청 URL
 	final String KTFC_PACKAGE = "com.kftc.bankpay.android";
 
-	public NiceWebViewClient(Activity activity, WebView target) {
+	public NiceWebViewClient(Activity activity, WebView target, UrlLoadingCallBack callBack) {
 		this.activity = activity;
 		this.target = target;
+		this.mCallBack = callBack;
 	}
 
 	public void bankPayPostProcess(String bankpayCode, String bankpayValue) {
@@ -44,6 +47,10 @@ public class NiceWebViewClient extends WebViewClient {
 
 	@Override
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+        // TODO: emit event
+        Log.i("iamport", "shouldOverrideUrlLoading: " + url);
+				mCallBack.shouldOverrideUrlLoadingCallBack(url);
 
 		if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {
 			Intent intent = null;
