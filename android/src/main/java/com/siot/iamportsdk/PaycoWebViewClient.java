@@ -12,17 +12,24 @@ import android.util.Log;
 
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
+import com.jeongjuwon.iamport.UrlLoadingCallBack;
 
 public class PaycoWebViewClient extends WebViewClient {
 
 	private Activity activity;
+	UrlLoadingCallBack mCallBack;
 
-	public PaycoWebViewClient(Activity activity, WebView target) {
+	public PaycoWebViewClient(Activity activity, WebView target, UrlLoadingCallBack callBack) {
 		this.activity = activity;
+		this.mCallBack = callBack;
 	}
 
 	@Override
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+	  // TODO: emit event
+	  Log.i("iamport", "shouldOverrideUrlLoading: " + url);
+		mCallBack.shouldOverrideUrlLoadingCallBack(url);
 
 		if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {
 			Intent intent = null;

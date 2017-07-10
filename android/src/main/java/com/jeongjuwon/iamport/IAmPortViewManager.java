@@ -132,8 +132,16 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
             view.setWebViewClient(new KakaoWebViewClient(activity, view));
         }
         else if(pg.equals("payco")){
+          PaycoWebViewClient webViewClient = new PaycoWebViewClient(activity, view, new UrlLoadingCallBack() {
 
-            view.setWebViewClient(new PaycoWebViewClient(activity, view));
+            @Override
+            public void shouldOverrideUrlLoadingCallBack(String s) {
+              Log.i("iamport", "shouldOverrideUrlLoadingCallBack - " + s);
+              emitPaymentEvent(s, s, s);
+            }
+
+          });
+          view.setWebViewClient(webViewClient);
         }
     }
 
