@@ -10,7 +10,7 @@ class IAmPort extends Component {
 
   componentDidMount() {
 
-    DeviceEventEmitter.addListener('paymentEvent', this._onShouldStartLoadWithRequest.bind(this));
+    DeviceEventEmitter.addListener('paymentEvent', this.paymentEvent.bind(this));
   }
 
   componentWillUnmount() {
@@ -33,14 +33,17 @@ class IAmPort extends Component {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   }
 
-  _onShouldStartLoadWithRequest(e) {
+  paymentEvent(e) {
 
     var url = e.result;
     var me = this;
     var original = e;
 
     //TODO delete
-    // console.log("onShouldStartLoadWithRequest", e);
+    console.log("paymentEvent", e);
+    if (e.result == "success" || e.result == "failed") {
+      this.props.onPaymentResultReceive(e);
+    }
 
     var imp_uid = this.getParameterByName("imp_uid", url),
       merchant_uid = this.getParameterByName("merchant_uid", url),
@@ -98,7 +101,7 @@ class IAmPort extends Component {
               return;
             }
 
-            iamport.receiveResult(rsp.success ? "success" : "failure", rsp.imp_uid, rsp.merchant_uid);
+            iamport.receiveResult(rsp.success ? "success" : "failed", rsp.imp_uid, rsp.merchant_uid);
           });
         </script>
       </body>
