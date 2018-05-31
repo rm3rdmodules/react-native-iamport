@@ -142,6 +142,8 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
 
           });
           view.setWebViewClient(webViewClient);
+        } else {
+          view.setWebViewClient(new WebViewClient());
         }
     }
 
