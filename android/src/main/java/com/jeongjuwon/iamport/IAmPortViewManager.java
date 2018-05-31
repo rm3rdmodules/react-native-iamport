@@ -28,6 +28,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.common.annotations.VisibleForTesting;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
+import com.siot.iamportsdk.CallbackWebViewClient;
 import com.siot.iamportsdk.KakaoWebViewClient;
 import com.siot.iamportsdk.NiceWebViewClient;
 import com.siot.iamportsdk.PaycoWebViewClient;
@@ -142,8 +143,16 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
 
           });
           view.setWebViewClient(webViewClient);
-        } else {
-          view.setWebViewClient(new WebViewClient());
+        }
+        else {
+            CallbackWebViewClient defaultWebViewClient = new CallbackWebViewClient(activity, view, new UrlLoadingCallBack() {
+                @Override
+                public void shouldOverrideUrlLoadingCallBack(String s) {
+                    Log.i("iamport", "shouldOverrideUrlLoadingCallBack - " + s);
+                    emitPaymentEvent(s, s, s);
+                }
+            });
+            view.setWebViewClient(defaultWebViewClient);
         }
     }
 
