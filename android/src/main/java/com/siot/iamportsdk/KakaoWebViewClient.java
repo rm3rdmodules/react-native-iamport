@@ -20,6 +20,7 @@ public class KakaoWebViewClient extends WebViewClient {
 
 	@Override
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
+		Log.i("iamport", "KakaoWebViewClient.shouldOverrideUrlLoading - " + url);
 
 		if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {
 			Intent intent = null;

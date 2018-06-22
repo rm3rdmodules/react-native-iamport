@@ -68,6 +68,7 @@ class IAmPort extends Component {
 
     let params = this.props.params;
     const merchant_uid = params.merchant_uid || ('merchant_' + new Date().getTime());
+    const m_redirect_url = params.m_redirect_url || (params.pg == 'paypal' ? 'https://service.iamport.kr/payments/success' : null);
     let HTML = `
     <!DOCTYPE html>
     <html>
@@ -86,7 +87,7 @@ class IAmPort extends Component {
             pg : '${params.pg}',
             pay_method : '${params.pay_method}',
             merchant_uid : '${merchant_uid}',
-            m_redirect_url : '${params.m_redirect_url}',
+            m_redirect_url : '${m_redirect_url}',
             app_scheme : '${params.app_scheme}',
             name : '${params.name}',
             amount : ${params.amount},

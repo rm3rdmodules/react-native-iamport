@@ -31,6 +31,8 @@ import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEm
 import com.siot.iamportsdk.KakaoWebViewClient;
 import com.siot.iamportsdk.NiceWebViewClient;
 import com.siot.iamportsdk.PaycoWebViewClient;
+import com.siot.iamportsdk.KcpWebViewClient;
+import com.siot.iamportsdk.CallbackWebViewClient;
 
 public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
 
@@ -115,33 +117,47 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
         Log.i("iamport", "PG - " + pg);
 
         if(pg.equals("nice")){
-
           NiceWebViewClient webViewClient = new NiceWebViewClient(activity, view, new UrlLoadingCallBack() {
 
             @Override
             public void shouldOverrideUrlLoadingCallBack(String s) {
-              Log.i("iamport", "shouldOverrideUrlLoadingCallBack - " + s);
+              Log.i("iamport", "NiceWebViewClient.shouldOverrideUrlLoadingCallBack - " + s);
               emitPaymentEvent(s, s, s);
             }
 
           });
           view.setWebViewClient(webViewClient);
-        }
-        else if(pg.equals("kakao")){
-
+        } else if(pg.equals("kakao")){
             view.setWebViewClient(new KakaoWebViewClient(activity, view));
-        }
-        else if(pg.equals("payco")){
+        } else if(pg.equals("payco")){
           PaycoWebViewClient webViewClient = new PaycoWebViewClient(activity, view, new UrlLoadingCallBack() {
 
             @Override
             public void shouldOverrideUrlLoadingCallBack(String s) {
-              Log.i("iamport", "shouldOverrideUrlLoadingCallBack - " + s);
+              Log.i("iamport", "PaycoWebViewClient.shouldOverrideUrlLoadingCallBack - " + s);
               emitPaymentEvent(s, s, s);
             }
 
           });
           view.setWebViewClient(webViewClient);
+        } else if(pg.equals("kcp")){
+            KcpWebViewClient webViewClient = new KcpWebViewClient(activity, view, new UrlLoadingCallBack() {
+                @Override
+                public void shouldOverrideUrlLoadingCallBack(String s) {
+                    Log.i("iamport", "KcpWebViewClient.shouldOverrideUrlLoadingCallBack - " + s);
+                    emitPaymentEvent(s, s, s);
+                }
+            });
+            view.setWebViewClient(webViewClient);
+        } else {
+            CallbackWebViewClient defaultWebViewClient = new CallbackWebViewClient(activity, view, new UrlLoadingCallBack() {
+                @Override
+                public void shouldOverrideUrlLoadingCallBack(String s) {
+                    Log.i("iamport", "CallbackWebViewClient.shouldOverrideUrlLoadingCallBack - " + s);
+                    emitPaymentEvent(s, s, s);
+                }
+            });
+            view.setWebViewClient(defaultWebViewClient);
         }
     }
 

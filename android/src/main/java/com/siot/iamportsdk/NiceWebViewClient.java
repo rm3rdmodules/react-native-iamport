@@ -49,7 +49,7 @@ public class NiceWebViewClient extends WebViewClient {
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
 	  // TODO: emit event
-	  Log.i("iamport", "shouldOverrideUrlLoading: " + url);
+	  Log.i("iamport", "NiceWebViewClient.shouldOverrideUrlLoading: " + url);
 		mCallBack.shouldOverrideUrlLoadingCallBack(url);
 
 		if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {
