@@ -77,6 +77,8 @@ export default class IAmPort extends Component {
 
   _onMessage(e) {
 
+    if ( e.nativeEvent.action != "done" ) return; //iamport 내부적으로 사용되는 다른 action 들이 추가로 더 있기 때문에 done 타입의 action이 아닌 경우 onMessage를 무시해야 함. 
+
     var res = JSON.parse(e.nativeEvent.data);
     var result = res.success ? "success" : "cancel";
     var request_id = res.request_id;
