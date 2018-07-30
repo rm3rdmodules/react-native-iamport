@@ -128,7 +128,7 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
 
           });
           view.setWebViewClient(webViewClient);
-        } else if(pg.equals("kakao")){
+        } else if(pg.equals("kakaopay")){
             view.setWebViewClient(new KakaoWebViewClient(activity, view));
         } else if(pg.equals("payco")){
           PaycoWebViewClient webViewClient = new PaycoWebViewClient(activity, view, new UrlLoadingCallBack() {

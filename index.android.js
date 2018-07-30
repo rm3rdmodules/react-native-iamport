@@ -96,7 +96,8 @@ class IAmPort extends Component {
             buyer_tel : '${params.buyer_tel}',
             buyer_addr : '${params.buyer_addr}',
             buyer_postcode : '${params.buyer_postcode}',
-            vbank_due : '${params.vbank_due}'
+            vbank_due : '${params.vbank_due}',
+            kakaoOpenApp : '${params.pg === "kakaopay"}'
           }, function(rsp){
 
             if('${params.pg}' == 'nice'){
