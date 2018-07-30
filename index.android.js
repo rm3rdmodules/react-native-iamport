@@ -50,7 +50,7 @@ class IAmPort extends Component {
       result = "";
 
     if (url.includes('success=false')) { // 취소 버튼을 눌렀거나 결제 실패시
-      result = "failed"https://github.com/rm3rdmodules/react-native-iamport/pulls
+      result = "failed"
     } else if (url.includes('success=true')) {
       result = "success";
     } else if (url.includes('payments/vbank')) {
