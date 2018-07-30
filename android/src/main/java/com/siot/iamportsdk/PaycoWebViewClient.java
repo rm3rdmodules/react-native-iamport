@@ -28,7 +28,7 @@ public class PaycoWebViewClient extends WebViewClient {
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
 	  // TODO: emit event
-	  Log.i("iamport", "shouldOverrideUrlLoading: " + url);
+	  Log.i("iamport", "PaycoWebViewClient.shouldOverrideUrlLoading: " + url);
 		mCallBack.shouldOverrideUrlLoadingCallBack(url);
 
 		if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {

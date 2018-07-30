@@ -23,7 +23,7 @@ public class CallbackWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        Log.i("iamport", "shouldOverrideUrlLoading: " + url);
+        Log.i("iamport", "CallbackWebViewClient.shouldOverrideUrlLoading: " + url);
         mCallBack.shouldOverrideUrlLoadingCallBack(url);
 
         return super.shouldOverrideUrlLoading(view, url);
