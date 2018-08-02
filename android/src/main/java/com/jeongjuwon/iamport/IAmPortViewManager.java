@@ -160,16 +160,6 @@ public class IAmPortViewManager extends SimpleViewManager<IAmPortWebView> {
             });
             view.setWebViewClient(defaultWebViewClient);
         }
-        else {
-            CallbackWebViewClient defaultWebViewClient = new CallbackWebViewClient(activity, view, new UrlLoadingCallBack() {
-                @Override
-                public void shouldOverrideUrlLoadingCallBack(String s) {
-                    Log.i("iamport", "shouldOverrideUrlLoadingCallBack - " + s);
-                    emitPaymentEvent(s, s, s);
-                }
-            });
-            view.setWebViewClient(defaultWebViewClient);
-        }
     }
 
     @Override
