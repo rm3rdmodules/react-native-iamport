@@ -97,7 +97,7 @@ class IAmPort extends Component {
             buyer_addr : '${params.buyer_addr}',
             buyer_postcode : '${params.buyer_postcode}',
             vbank_due : '${params.vbank_due}',
-            kakaoOpenApp : '${params.pg === "kakaopay"}'
+            kakaoOpenApp : ${params.pg === "kakaopay"}
           }, function(rsp){
 
             if('${params.pg}' == 'nice'){
@@ -126,7 +126,12 @@ class IAmPort extends Component {
   render() {
 
     return (
-      <IAmPortViewManager {...this.props} source={this.getRequestContent()} pg={this.props.params.pg} appScheme={this.props.params.app_scheme}></IAmPortViewManager>
+      <IAmPortViewManager
+        {...this.props}
+        source={this.getRequestContent()}
+        pg={this.props.params.pg}
+        appScheme={this.props.params.app_scheme}
+      ></IAmPortViewManager>
     );
   }
 }

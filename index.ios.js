@@ -44,7 +44,7 @@ export default class IAmPort extends Component {
             buyer_addr : '${params.buyer_addr}',
             buyer_postcode : '${params.buyer_postcode}',
             vbank_due : '${params.vbank_due}',
-            kakaoOpenApp : '${params.pg === "kakaopay"}'
+            kakaoOpenApp : ${params.pg === "kakaopay"}
           }, function(rsp){
 
            if('${params.pg}' == 'nice'){
@@ -78,18 +78,26 @@ export default class IAmPort extends Component {
 
   _onMessage(e) {
 
-    if ( e.nativeEvent.action != "done" ) return; //iamport 내부적으로 사용되는 다른 action 들이 추가로 더 있기 때문에 done 타입의 action이 아닌 경우 onMessage를 무시해야 함. 
+    console.log('_onMessage native event', e.nativeEvent);
+    const { data, action } = e.nativeEvent;
+    const { params, onPaymentResultReceive } = this.props;
 
-    var res = JSON.parse(e.nativeEvent.data);
-    var result = res.success ? "success" : "cancel";
-    var request_id = res.request_id;
-    var imp_uid = res.imp_uid;
-    var merchant_uid = res.merchant_uid;
-    var error_msg = res.error_msg;
+    if(params.pg !== "kakaopay") {
 
-    // console.log(result);
+      //iamport 내부적으로 사용되는 다른 action 들이 추가로 더 있기 때문에 done 타입의 action이 아닌 경우 onMessage를 무시해야 함.
+      if ( action !== "done" ) return;
+    }
 
-    this.props.onPaymentResultReceive({result, imp_uid, merchant_uid});
+    if (!data) {
+      return;
+    }
+
+    const res = JSON.parse(data);
+    const { success, request_id, imp_uid, merchant_uid, error_msg } = res;
+    const result = success ? "success" : "cancel";
+    console.log('_onMessage', result);
+
+    onPaymentResultReceive({ result, imp_uid, merchant_uid });
   }
 
   _onShouldStartLoadWithRequest(e) {
@@ -110,6 +118,7 @@ export default class IAmPort extends Component {
     } else if (url.indexOf(this.props.params.app_scheme + '://cancel') == 0) {
       result = "canceled";
     }
+    console.log("onShouldStartLoadWithRequest result", result);
 
     if (result) {
       this.props.onPaymentResultReceive({result, imp_uid, merchant_uid});
@@ -142,7 +151,10 @@ export default class IAmPort extends Component {
       <WebView
         {...this.props}
         source={{ html: this.getRequestContent() }}
-        startInLoadingState={true} injectedJavaScript={this.injectPostMessageFetch()} onMessage={this._onMessage.bind(this)} onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest.bind(this)}
+        startInLoadingState={true}
+        injectedJavaScript={this.injectPostMessageFetch()}
+        onMessage={this._onMessage.bind(this)}
+        onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest.bind(this)}
         renderError={(e) => {
           return null;
         }}
