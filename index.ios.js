@@ -1,9 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {
-  WebView,
-  Linking
-} from 'react-native';
+import { WebView } from 'react-native';
 
 export default class IAmPort extends Component {
 
@@ -30,7 +27,7 @@ export default class IAmPort extends Component {
           var IMP = window.IMP;
           IMP.init('${params.code}');
 
-          IMP.request_pay({
+          var params = {
             pg : '${params.pg}',
             pay_method : '${params.pay_method}',
             merchant_uid : '${merchant_uid}',
@@ -45,11 +42,14 @@ export default class IAmPort extends Component {
             buyer_postcode : '${params.buyer_postcode}',
             vbank_due : '${params.vbank_due}',
             kakaoOpenApp : ${params.pg === "kakaopay"}
-          }, function(rsp){
+          };
+          if('${params.pg}' == 'nice') {
+            params['niceMobileV2'] = true;
+          }
 
-           if('${params.pg}' == 'nice'){
-
-             return;
+          IMP.request_pay(params, function(rsp) {
+           if('${params.pg}' == 'nice') {
+            return;
            }
 
            window.postMessage(JSON.stringify(rsp));
@@ -150,6 +150,7 @@ export default class IAmPort extends Component {
     return (
       <WebView
         {...this.props}
+        originWhitelist={['http://*', 'https://*', `${this.props.params.app_scheme}://*`]}
         source={{ html: this.getRequestContent() }}
         startInLoadingState={true}
         injectedJavaScript={this.injectPostMessageFetch()}
