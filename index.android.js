@@ -1,8 +1,8 @@
 'use strict';
 
-import React, {Component} from 'react';
-
-import {requireNativeComponent, DeviceEventEmitter} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
+import { requireNativeComponent, DeviceEventEmitter } from 'react-native';
 
 const IAmPortViewManager = requireNativeComponent('IAmPortViewManager', null);
 
@@ -36,11 +36,8 @@ class IAmPort extends Component {
   paymentEvent(e) {
 
     var url = e.result;
-    var me = this;
     var original = e;
 
-    //TODO delete
-    console.log("paymentEvent", e);
     if (e.result == "success" || e.result == "failed") {
       this.props.onPaymentResultReceive(e);
     }
@@ -68,7 +65,7 @@ class IAmPort extends Component {
 
     let params = this.props.params;
     const merchant_uid = params.merchant_uid || ('merchant_' + new Date().getTime());
-    const m_redirect_url = params.m_redirect_url || (params.pg == 'paypal' ? 'https://service.iamport.kr/payments/success' : null);
+    const m_redirect_url = params.m_redirect_url || 'https://service.iamport.kr/payments/success';
     let HTML = `
     <!DOCTYPE html>
     <html>
@@ -114,8 +111,6 @@ class IAmPort extends Component {
   }
 
   _onPaymentResultReceive(e) {
-    // TODO: delete
-    // console.log(e);
 
     if (this.props.onPaymentResultReceive) {
 
@@ -131,9 +126,14 @@ class IAmPort extends Component {
         source={this.getRequestContent()}
         pg={this.props.params.pg}
         appScheme={this.props.params.app_scheme}
+        style={style} // or gets a white blank screen
       ></IAmPortViewManager>
     );
   }
 }
 
-module.exports = IAmPort
+const style = StyleSheet.create({
+  flex: 1
+});
+
+module.exports = IAmPort;
