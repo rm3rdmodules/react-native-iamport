@@ -1,5 +1,12 @@
 # react-native-iamport
 
+
+리엑트 네이티브 아임포트 공식 라이브러리 [iamport](https://github.com/iamport/iamport-react-native)가 나옴에 따라 본 레파지토리는 더 이상 업데이트 되지 않습니다. 
+그 동안 사용해주셔서 감사합니다.
+
+공식 주소: https://github.com/iamport/iamport-react-native
+
+
 리액트 네이티브용 아임포트 모듈입니다. 필요에 의해 나이스페이와 카카오페이, 페이코만 구현하였습니다. 안드로이드에서의 리액트네이티브 웹뷰는 이벤트 핸들링이 뜻대로 되질 않아 직접 안드로이드로 모듈 구현하였습니다. 필요에 따라 더 구현을 해서 사용하실 분들을 위해 공개합니다.
 
 # Installation
